@@ -1,0 +1,20 @@
+function H = ransacH(pts1,pts2,MIN_INLIER_PER,TH,MAX_ITR)
+    N = size(pts1);
+    MIN_INLIERS = round(MIN_INLIER_PER*N);
+    max
+    
+    for i=1:MAX_ITR
+        sampleIdx = randIndex(N,4); % select 4 random points to estimate H
+        H1 = computeH(pts1(:,sampleIdx),pts2(:,sampleIdx));
+        pts3 = H1 * [pts1;ones(1,N)];
+        pts3 = pts3(1:2,:)./repmat(pts3(3,:),2,1);
+        d = sum((pts2-pts3).^2,1);
+        
+        inliers = find(d<TH);
+        inlrNum(i) = length(inliers);
+        if inlrNum(i) < MIN_INLIERS
+            continue;
+        end
+        flib{i} = 
+    end
+end

@@ -1,9 +1,10 @@
-function H = computeH(X1,X2)
-% X2 = H*X1
-[Y1,T1] = NormalizeCoord(X1);
-[Y2,T2] = NormalizeCoord(X2);
-% Y1 = X1;
-% Y2 = X2;
+function H = computeH(p1,p2)
+% find H such that X2 = H*X1 where X1,X2 r p1,p2 in homogenous coord
+% p1, p2 should be N point pairs, i.e. p1,p2 should be 2xN matrix N>=4
+
+[Y1,T1] = NormalizeCoord(p1);
+[Y2,T2] = NormalizeCoord(p2);
+
 N = size(Y1,2);
 A = zeros(2*N,9);
 
@@ -22,7 +23,7 @@ H = V(:,end);
 H = reshape(H,3,3);
 H = H';
 H = T2\H*T1;
-H = H';
+% H = H'; % in matlab functions X is Nx2 , so we need to take H'
 H = H/H(end,end);
 end
     

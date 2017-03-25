@@ -99,7 +99,7 @@ function btnSelectImages_Callback(hObject, eventdata, handles)
 % hObject    handle to btnSelectImages (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-[x,y] = ginput(8);
+[x,y] = ginput(14);
 handles.x = x;
 handles.y = y;
 display(x);
@@ -112,18 +112,17 @@ function btnCalH_Callback(hObject, eventdata, handles)
 % hObject    handle to btnCalH (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-X1 = zeros(3,4);
-X1(3,:) = 1;
-X2 = zeros(3,4);
-X2(3,:) = 1;
-for i=1:4
+X1 = zeros(2,4);
+X2 = zeros(2,4);
+N = size(handles.x)/2;
+for i=1:N
     X1(1,i) = handles.x(2*i-1);
     X1(2,i) = handles.y(2*i-1);
     X2(1,i) = handles.x(2*i);
     X2(2,i) = handles.y(2*i);
 end
-H = computeH(X1,X2);
-tform = projective2d(H);
+H = ransacH(X1,X2,0.2,2,4000);
+tform = projective2d(H');
 % tform = estimateGeometricTransform(X1(1:2,:)',X2(1:2,:)','projective');
 RI1 = imref2d(size(handles.I1));
 RI2 = imref2d(size(handles.I2));

@@ -17,7 +17,7 @@ matches = vl_ubcmatch(D1,D2);
 pts1 = F1(1:2,matches(1,:));
 pts2 = F2(1:2,matches(2,:));
 
-H = ransacH(pts1,pts2,0.2,2,4000);
+[H,ni,nf,e] = ransacH(pts1,pts2,0.2,2,4000);
 tform = projective2d(H');
 % tform = estimateGeometricTransform(X1(1:2,:)',X2(1:2,:)','projective');
 RI1 = imref2d(size(I1));
